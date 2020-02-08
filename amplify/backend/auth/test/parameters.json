@@ -1,0 +1,79 @@
+{
+    "identityPoolName": "test_identitypool",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "test4230229c",
+    "userPoolName": "test_userpool",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "userpoolClientLambdaRole": "test4230229c_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "useDefault": "manual",
+    "authSelections": "identityPoolAndUserPool",
+    "resourceName": "test",
+    "thirdPartyAuth": false,
+    "usernameAttributes": [
+        "email, phone_number"
+    ],
+    "userPoolGroups": true,
+    "adminQueries": true,
+    "triggers": "{\"PostConfirmation\":[\"add-to-group\"]}",
+    "hostedUI": false,
+    "userPoolGroupList": [
+        "admin",
+        "dealers",
+        "users"
+    ],
+    "adminQueryGroup": "admin",
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": [
+        "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
+    ],
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "testPostConfirmation",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        }
+    ]
+}

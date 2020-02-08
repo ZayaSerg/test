@@ -1,0 +1,79 @@
+{
+	"function": {
+		"testPostConfirmation": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
+		},
+		"AdminQueries6b41f93b": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "test",
+					"attributes": [
+						"UserPoolId"
+					]
+				}
+			]
+		}
+	},
+	"auth": {
+		"userPoolGroups": {
+			"service": "Cognito-UserPool-Groups",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "test",
+					"attributes": [
+						"UserPoolId",
+						"AppClientIDWeb",
+						"AppClientID",
+						"IdentityPoolId"
+					]
+				}
+			]
+		},
+		"test": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "testPostConfirmation",
+					"triggerProvider": "Cognito",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			]
+		}
+	},
+	"api": {
+		"AdminQueries": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "test",
+					"attributes": [
+						"UserPoolId"
+					]
+				},
+				{
+					"category": "function",
+					"resourceName": "AdminQueries6b41f93b",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			]
+		}
+	}
+}

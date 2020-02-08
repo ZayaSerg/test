@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "test",
+    "functionName": "testPostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "testPostConfirmation",
+    "skipEdit": true,
+    "resourceName": "testPostConfirmation"
+}
